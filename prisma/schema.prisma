@@ -1,0 +1,73 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum Subject {
+  english
+  mathematics
+  science
+  social_studies
+  history
+  geography
+  civics
+  economics
+  computer_science
+  general_knowledge
+  current_affairs
+  reasoning
+  aptitude
+  environment
+  arts
+  music
+  sports
+
+  @@map("subject")
+}
+
+enum QuestionType {
+  text
+  image
+  audio
+
+  @@map("question_type")
+}
+
+enum Difficulty {
+  easy
+  medium
+  hard
+
+  @@map("difficulty")
+}
+
+model Question {
+  id            String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  subject       Subject
+  type          QuestionType
+  difficulty    Difficulty   @default(medium)
+  questionText  String       @map("question_text")
+  mediaUrl      String?      @map("media_url")
+  options       Json         // Stored as JSONB, validated at application layer (must be exactly 4 strings)
+  correctAnswer String       @map("correct_answer")
+  explanation   String?
+  createdAt     DateTime     @default(now()) @db.Timestamptz @map("created_at")
+
+  @@map("questions")
+}
+
+model RequestLog {
+  id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  method    String
+  timestamp DateTime @default(now()) @db.Timestamptz
+
+  @@map("request_logs")
+}
