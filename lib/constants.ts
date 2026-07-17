@@ -5,7 +5,7 @@ export const SUBJECTS = [
   'social_studies',
   'history',
   'geography',
-  'civics',
+  'space_science',
   'economics',
   'computer_science',
   'general_knowledge',
