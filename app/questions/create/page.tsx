@@ -3,9 +3,28 @@
 import { useActionState, useEffect, useRef } from 'react'
 import Link from 'next/link'
 import { createQuestion, FormState } from '../actions'
-
 import { SUBJECTS, DIFFICULTIES, QUESTION_TYPES } from '@/lib/constants'
-
+import {
+  Form,
+  TextField,
+  Label,
+  Input,
+  TextArea,
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectIndicator,
+  SelectPopover,
+  ListBox,
+  ListBoxItem,
+  Button,
+  RadioGroup,
+  Radio,
+  RadioContent,
+  RadioControl,
+  RadioIndicator,
+  FieldError,
+} from '@heroui/react'
 
 const INITIAL_STATE: FormState = {
   success: false,
@@ -26,7 +45,6 @@ export default function CreateQuestionPage() {
   const subjects = SUBJECTS
   const difficulties = DIFFICULTIES
   const questionTypes = QUESTION_TYPES
-
 
   // Helper to format enum values into display text
   const formatEnumText = (text: string) => {
@@ -59,7 +77,7 @@ export default function CreateQuestionPage() {
             </Link>
             <div>
               <h1 className="text-xl font-bold tracking-tight">Create Question</h1>
-              <p className="text-xs text-zinc-500 dark:text-zinc-400">Add to the Question Bank</p>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400">Add to the Question Bank (HeroUI)</p>
             </div>
           </div>
           <Link
@@ -78,8 +96,8 @@ export default function CreateQuestionPage() {
           <div
             className={`mb-6 p-4 rounded-2xl border flex items-start gap-3 shadow-sm ${
               state.success
-                ? 'bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/50 text-emerald-800 dark:text-emerald-450'
-                : 'bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/50 text-red-800 dark:text-red-450'
+                ? 'bg-emerald-50 dark:bg-emerald-950/20 border-emerald-200 dark:border-emerald-800/50 text-emerald-800 dark:text-emerald-455'
+                : 'bg-red-50 dark:bg-red-950/20 border-red-200 dark:border-red-800/50 text-red-800 dark:text-red-455'
             }`}
           >
             {state.success ? (
@@ -125,117 +143,109 @@ export default function CreateQuestionPage() {
         )}
 
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-md overflow-hidden">
-          <form ref={formRef} action={formAction} className="p-8 space-y-8">
+          <Form ref={formRef} action={formAction} className="p-8 space-y-8">
             
-            {/* Subject and Difficulty Grid */}
+            {/* Subject, Difficulty, and Type Grid */}
             <div className="grid md:grid-cols-3 gap-6">
-              <div>
-                <label htmlFor="subject" className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
-                  Subject *
-                </label>
-                <select
-                  id="subject"
-                  name="subject"
-                  required
-                  defaultValue="computer_science"
-                  className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition"
-                >
-                  {subjects.map((sub) => (
-                    <option key={sub} value={sub}>
-                      {formatEnumText(sub)}
-                    </option>
-                  ))}
-                </select>
+              
+              {/* Subject */}
+              <Select name="subject" defaultValue="computer_science" className="w-full">
+                <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Subject *</Label>
+                <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
+                  <SelectValue />
+                  <SelectIndicator className="w-4 h-4 ml-2" />
+                </SelectTrigger>
+                <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
+                  <ListBox selectionMode="single">
+                    {subjects.map((sub) => (
+                      <ListBoxItem id={sub} key={sub} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                        {formatEnumText(sub)}
+                      </ListBoxItem>
+                    ))}
+                  </ListBox>
+                </SelectPopover>
                 {state.errors?.subject && (
                   <p className="text-xs text-red-500 mt-1.5">{state.errors.subject}</p>
                 )}
-              </div>
+              </Select>
 
-              <div>
-                <label htmlFor="difficulty" className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
-                  Difficulty *
-                </label>
-                <select
-                  id="difficulty"
-                  name="difficulty"
-                  required
-                  defaultValue="medium"
-                  className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition"
-                >
-                  {difficulties.map((diff) => (
-                    <option key={diff} value={diff}>
-                      {formatEnumText(diff)}
-                    </option>
-                  ))}
-                </select>
+              {/* Difficulty */}
+              <Select name="difficulty" defaultValue="medium" className="w-full">
+                <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Difficulty *</Label>
+                <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
+                  <SelectValue />
+                  <SelectIndicator className="w-4 h-4 ml-2" />
+                </SelectTrigger>
+                <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
+                  <ListBox selectionMode="single">
+                    {difficulties.map((diff) => (
+                      <ListBoxItem id={diff} key={diff} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                        {formatEnumText(diff)}
+                      </ListBoxItem>
+                    ))}
+                  </ListBox>
+                </SelectPopover>
                 {state.errors?.difficulty && (
                   <p className="text-xs text-red-500 mt-1.5">{state.errors.difficulty}</p>
                 )}
-              </div>
+              </Select>
 
-              <div>
-                <label htmlFor="type" className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
-                  Question Type *
-                </label>
-                <select
-                  id="type"
-                  name="type"
-                  required
-                  defaultValue="text"
-                  className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition"
-                >
-                  {questionTypes.map((t) => (
-                    <option key={t} value={t}>
-                      {formatEnumText(t)}
-                    </option>
-                  ))}
-                </select>
+              {/* Question Type */}
+              <Select name="type" defaultValue="text" className="w-full">
+                <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Question Type *</Label>
+                <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
+                  <SelectValue />
+                  <SelectIndicator className="w-4 h-4 ml-2" />
+                </SelectTrigger>
+                <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
+                  <ListBox selectionMode="single">
+                    {questionTypes.map((t) => (
+                      <ListBoxItem id={t} key={t} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                        {formatEnumText(t)}
+                      </ListBoxItem>
+                    ))}
+                  </ListBox>
+                </SelectPopover>
                 {state.errors?.type && (
                   <p className="text-xs text-red-500 mt-1.5">{state.errors.type}</p>
                 )}
-              </div>
+              </Select>
+
             </div>
 
             {/* Question Text */}
-            <div>
-              <label htmlFor="questionText" className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+            <TextField name="questionText" isInvalid={!!state.errors?.questionText} isRequired className="w-full">
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
                 Question Text *
-              </label>
-              <textarea
-                id="questionText"
-                name="questionText"
-                rows={4}
-                required
+              </Label>
+              <TextArea
                 placeholder="Enter the question text here..."
-                className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition resize-y"
+                className="w-full bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition resize-y min-h-[100px] shadow-sm"
               />
               {state.errors?.questionText && (
-                <p className="text-xs text-red-500 mt-1.5">{state.errors.questionText}</p>
+                <FieldError className="text-xs text-red-500 mt-1.5">{state.errors.questionText}</FieldError>
               )}
-            </div>
+            </TextField>
 
             {/* Media Field */}
-            <div>
-              <label htmlFor="mediaUrl" className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+            <TextField name="mediaUrl" isInvalid={!!state.errors?.mediaUrl} className="w-full">
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
                 Media URL (Optional)
-              </label>
-              <textarea
-                id="mediaUrl"
-                name="mediaUrl"
-                rows={2}
+              </Label>
+              <TextArea
                 placeholder="Enter media URL if type is Image or Audio..."
-                className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition resize-y"
+                className="w-full bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition resize-y min-h-[60px] shadow-sm"
               />
               {state.errors?.mediaUrl && (
-                <p className="text-xs text-red-500 mt-1.5">{state.errors.mediaUrl}</p>
+                <FieldError className="text-xs text-red-500 mt-1.5">{state.errors.mediaUrl}</FieldError>
               )}
-            </div>
+            </TextField>
 
             {/* Options Selection */}
-            <div>
-              <label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-1">
+            <RadioGroup name="correctAnswer" isRequired isInvalid={!!state.errors?.correctAnswer}>
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-1">
                 Options & Correct Answer *
-              </label>
+              </Label>
               <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-4">
                 Enter four options and select the radio button next to the correct one.
               </p>
@@ -243,104 +253,84 @@ export default function CreateQuestionPage() {
               <div className="space-y-4">
                 {[0, 1, 2, 3].map((idx) => (
                   <div key={idx} className="flex items-center gap-3">
-                    <label className="relative flex items-center cursor-pointer">
-                      <input
-                        type="radio"
-                        name="correctAnswer"
-                        value={idx}
-                        required
-                        className="peer sr-only"
-                        aria-label={`Mark Option ${String.fromCharCode(65 + idx)} as correct`}
-                      />
-                      <div className="w-6 h-6 rounded-full border border-zinc-300 dark:border-zinc-750 flex items-center justify-center text-xs font-bold text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-950 peer-checked:bg-emerald-500 peer-checked:border-emerald-500 peer-checked:text-white transition duration-200">
-                        {String.fromCharCode(65 + idx)}
-                      </div>
-                    </label>
-                    <input
+                    <Radio value={idx.toString()} className="group">
+                      <RadioContent className="flex items-center">
+                        <RadioControl className="mr-2">
+                          <RadioIndicator className="w-5 h-5 border border-zinc-300 dark:border-zinc-700 rounded-full flex items-center justify-center bg-white dark:bg-zinc-900 group-data-[selected=true]:bg-emerald-500 group-data-[selected=true]:border-emerald-500 transition-colors duration-150 shadow-sm">
+                            <div className="w-2 h-2 rounded-full bg-white scale-0 group-data-[selected=true]:scale-100 transition-transform duration-150" />
+                          </RadioIndicator>
+                        </RadioControl>
+                        <span className="text-sm font-bold text-zinc-500 dark:text-zinc-400 group-data-[selected=true]:text-emerald-600 dark:group-data-[selected=true]:text-emerald-400 transition-colors">
+                          {String.fromCharCode(65 + idx)}
+                        </span>
+                      </RadioContent>
+                    </Radio>
+                    <Input
                       type="text"
                       name={`option${idx}`}
                       required
                       placeholder={`Option ${String.fromCharCode(65 + idx)}`}
-                      className="flex-1 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition"
+                      className="flex-1 bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm"
                     />
                   </div>
                 ))}
               </div>
               {state.errors?.options && (
-                <p className="text-xs text-red-500 mt-2">{state.errors.options}</p>
+                <FieldError className="text-xs text-red-500 mt-2 block">{state.errors.options}</FieldError>
               )}
               {state.errors?.correctAnswer && (
-                <p className="text-xs text-red-500 mt-2">{state.errors.correctAnswer}</p>
+                <FieldError className="text-xs text-red-500 mt-2 block">{state.errors.correctAnswer}</FieldError>
               )}
-            </div>
+            </RadioGroup>
 
             {/* Tags (Comma separated) */}
-            <div>
-              <label htmlFor="tags" className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+            <TextField name="tags" className="w-full">
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
                 Tags (Comma-separated)
-              </label>
-              <input
-                id="tags"
+              </Label>
+              <Input
                 type="text"
-                name="tags"
                 placeholder="e.g., algebra, calculus, physics"
-                className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition"
+                className="w-full bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm"
               />
               <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1.5">
                 Separate multiple tags with commas. Casing will be normalized.
               </p>
-            </div>
+            </TextField>
 
             {/* Explanation */}
-            <div>
-              <label htmlFor="explanation" className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+            <TextField name="explanation" isInvalid={!!state.errors?.explanation} className="w-full">
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
                 Explanation (Optional)
-              </label>
-              <textarea
-                id="explanation"
-                name="explanation"
-                rows={3}
+              </Label>
+              <TextArea
                 placeholder="Provide a step-by-step explanation for the correct answer..."
-                className="w-full bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition resize-y"
+                className="w-full bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition resize-y min-h-[80px] shadow-sm"
               />
               {state.errors?.explanation && (
-                <p className="text-xs text-red-500 mt-1.5">{state.errors.explanation}</p>
+                <FieldError className="text-xs text-red-500 mt-1.5">{state.errors.explanation}</FieldError>
               )}
-            </div>
+            </TextField>
 
             {/* Form Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-4 border-t border-zinc-100 dark:border-zinc-800 pt-6">
-              <button
+              <Button
                 type="submit"
-                disabled={isPending}
-                className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 disabled:from-violet-650 disabled:to-indigo-650 text-white font-bold text-sm px-6 py-3.5 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/35 transition duration-200 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed"
+                isDisabled={isPending}
+                className="flex-1 inline-flex items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-violet-600 to-indigo-600 hover:from-violet-500 hover:to-indigo-500 disabled:from-violet-650 disabled:to-indigo-650 text-white font-bold text-sm px-6 py-3.5 shadow-lg shadow-indigo-500/25 hover:shadow-indigo-500/35 transition duration-200 active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed cursor-pointer"
               >
-                {isPending ? (
-                  <>
-                    <svg
-                      className="animate-spin h-5 w-5 text-white"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                    >
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
-                    </svg>
-                    Saving...
-                  </>
-                ) : (
-                  'Save Question'
-                )}
-              </button>
-              <button
+                {isPending ? 'Saving...' : 'Save Question'}
+              </Button>
+              <Button
                 type="reset"
-                disabled={isPending}
-                className="flex-1 sm:flex-none px-6 py-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-850 font-bold text-sm text-zinc-700 dark:text-zinc-300 transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed"
+                isDisabled={isPending}
+                className="flex-1 sm:flex-none px-6 py-3.5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-50 dark:hover:bg-zinc-850 font-bold text-sm text-zinc-700 dark:text-zinc-300 transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
               >
                 Reset
-              </button>
+              </Button>
             </div>
 
-          </form>
+          </Form>
         </div>
       </main>
     </div>
