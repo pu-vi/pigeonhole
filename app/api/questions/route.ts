@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@/lib/prisma'
-import { Subject, Difficulty, QuestionType } from '@prisma/client'
+import { Subject, Difficulty, QuestionType, Prisma } from '@prisma/client'
 
 export const dynamic = 'force-dynamic'
 
@@ -16,7 +16,7 @@ export async function GET(request: NextRequest) {
 
     const skip = (page - 1) * limit
 
-    const where: any = {}
+    const where: Prisma.QuestionWhereInput = {}
 
     if (difficulty && Object.values(Difficulty).includes(difficulty as Difficulty)) {
       where.difficulty = difficulty as Difficulty

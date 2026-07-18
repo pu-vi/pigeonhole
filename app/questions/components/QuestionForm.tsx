@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import Link from 'next/link'
 import { Question, QuestionTag } from '@prisma/client'
 import { FormState, generateQuestionWithAI } from '../actions'
@@ -94,7 +94,7 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
     setState(INITIAL_STATE)
 
     const formData = new FormData(e.currentTarget)
-    const payload: any = {
+    const payload: Record<string, FormDataEntryValue | null> = {
       questionText: formData.get('questionText'),
       mediaUrl: formData.get('mediaUrl'),
       type: formData.get('type'),

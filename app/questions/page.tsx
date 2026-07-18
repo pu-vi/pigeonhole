@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import Link from 'next/link'
 import type { Question, QuestionTag } from '@prisma/client'
 import { SUBJECTS, DIFFICULTIES, QUESTION_TYPES } from '@/lib/constants'
@@ -37,7 +37,7 @@ export default function QuestionsPage() {
   const difficulties = DIFFICULTIES
   const questionTypes = QUESTION_TYPES
 
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async () => {
     setIsLoading(true)
     try {
       const query = new URLSearchParams()
@@ -60,12 +60,22 @@ export default function QuestionsPage() {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [page, subject, difficulty, type, tag])
 
   // Trigger search when page, subject, difficulty, type or tag changes
   useEffect(() => {
-    fetchQuestions()
-  }, [page, subject, difficulty, type, tag])
+    let active = true
+    const run = async () => {
+      await Promise.resolve()
+      if (active) {
+        fetchQuestions()
+      }
+    }
+    run()
+    return () => {
+      active = false
+    }
+  }, [fetchQuestions])
 
   // Reset page when filters change
   const handleFilterChange = (filterType: string, value: string) => {
