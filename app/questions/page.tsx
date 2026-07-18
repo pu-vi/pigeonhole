@@ -169,28 +169,28 @@ export default function QuestionsPage() {
         </div>
 
         {/* Filter Toolbar */}
-        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl p-6 mb-8 shadow-sm">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 items-end">
+        <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 mb-8 shadow-md">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-end">
             {/* Subject Select */}
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Subject</Label>
+            <div className="flex flex-col gap-1.5 w-full">
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Subject</Label>
               <Select
                 name="subject"
                 selectedKey={subject}
                 onSelectionChange={(key) => handleFilterChange('subject', key as string)}
                 className="w-full"
               >
-                <SelectTrigger className="w-full flex items-center justify-between bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-violet-500 transition shadow-sm">
+                <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
                   <SelectValue />
-                  <SelectIndicator className="w-3.5 h-3.5 ml-2" />
+                  <SelectIndicator className="w-4 h-4 ml-2" />
                 </SelectTrigger>
                 <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
                   <ListBox selectionMode="single">
-                    <ListBoxItem id="all" className="px-3 py-2 text-xs text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors">
+                    <ListBoxItem id="all" className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
                       All Subjects
                     </ListBoxItem>
                     {subjects.map((sub) => (
-                      <ListBoxItem id={sub} key={sub} className="px-3 py-2 text-xs text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors">
+                      <ListBoxItem id={sub} key={sub} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
                         {formatEnumText(sub)}
                       </ListBoxItem>
                     ))}
@@ -200,25 +200,25 @@ export default function QuestionsPage() {
             </div>
 
             {/* Difficulty Select */}
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Difficulty</Label>
+            <div className="flex flex-col gap-1.5 w-full">
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Difficulty</Label>
               <Select
                 name="difficulty"
                 selectedKey={difficulty}
                 onSelectionChange={(key) => handleFilterChange('difficulty', key as string)}
                 className="w-full"
               >
-                <SelectTrigger className="w-full flex items-center justify-between bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-violet-500 transition shadow-sm">
+                <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
                   <SelectValue />
-                  <SelectIndicator className="w-3.5 h-3.5 ml-2" />
+                  <SelectIndicator className="w-4 h-4 ml-2" />
                 </SelectTrigger>
                 <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
                   <ListBox selectionMode="single">
-                    <ListBoxItem id="all" className="px-3 py-2 text-xs text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors">
+                    <ListBoxItem id="all" className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
                       All Difficulties
                     </ListBoxItem>
                     {difficulties.map((diff) => (
-                      <ListBoxItem id={diff} key={diff} className="px-3 py-2 text-xs text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors">
+                      <ListBoxItem id={diff} key={diff} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
                         {formatEnumText(diff)}
                       </ListBoxItem>
                     ))}
@@ -228,25 +228,25 @@ export default function QuestionsPage() {
             </div>
 
             {/* Question Type Select */}
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Question Type</Label>
+            <div className="flex flex-col gap-1.5 w-full">
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Question Type</Label>
               <Select
                 name="type"
                 selectedKey={type}
                 onSelectionChange={(key) => handleFilterChange('type', key as string)}
                 className="w-full"
               >
-                <SelectTrigger className="w-full flex items-center justify-between bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2.5 text-xs focus:outline-none focus:ring-1 focus:ring-violet-500 transition shadow-sm">
+                <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
                   <SelectValue />
-                  <SelectIndicator className="w-3.5 h-3.5 ml-2" />
+                  <SelectIndicator className="w-4 h-4 ml-2" />
                 </SelectTrigger>
                 <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
                   <ListBox selectionMode="single">
-                    <ListBoxItem id="all" className="px-3 py-2 text-xs text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors">
+                    <ListBoxItem id="all" className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
                       All Types
                     </ListBoxItem>
                     {questionTypes.map((t) => (
-                      <ListBoxItem id={t} key={t} className="px-3 py-2 text-xs text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors">
+                      <ListBoxItem id={t} key={t} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
                         {formatEnumText(t)}
                       </ListBoxItem>
                     ))}
@@ -256,51 +256,54 @@ export default function QuestionsPage() {
             </div>
 
             {/* Tag Search Input */}
-            <div className="flex flex-col gap-1.5">
-              <Label className="text-xs font-bold text-zinc-500 dark:text-zinc-400 uppercase tracking-wider">Tag</Label>
-              <form onSubmit={handleTagSearch} className="flex gap-2 w-full">
+            <div className="flex flex-col gap-1.5 w-full">
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Tag</Label>
+              <form onSubmit={handleTagSearch} className="relative w-full">
                 <Input
                   type="text"
                   placeholder="e.g. algebra"
                   value={localTag}
                   onChange={(e) => setLocalTag(e.target.value)}
-                  className="flex-1 bg-zinc-50 dark:bg-zinc-950 border border-zinc-200 dark:border-zinc-800 rounded-xl px-3 py-2 text-xs focus:outline-none focus:ring-1 focus:ring-violet-500 transition shadow-sm"
+                  className="w-full bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl pl-4 pr-10 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm"
                 />
-                <Button
+                <button
                   type="submit"
-                  className="px-3.5 py-2 text-xs font-bold bg-zinc-900 dark:bg-zinc-50 text-white dark:text-zinc-900 hover:bg-zinc-800 dark:hover:bg-zinc-200 rounded-xl transition cursor-pointer"
+                  className="absolute right-3.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 dark:hover:text-zinc-300 transition duration-150"
+                  aria-label="Search by tag"
                 >
-                  Go
-                </Button>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                  </svg>
+                </button>
               </form>
             </div>
           </div>
 
           {/* Active Filters Summary */}
           {(subject !== 'all' || difficulty !== 'all' || type !== 'all' || tag !== '') && (
-            <div className="mt-4 pt-4 border-t border-zinc-100 dark:border-zinc-850 flex items-center justify-between gap-4">
+            <div className="mt-6 pt-6 border-t border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between gap-4 flex-wrap">
               <div className="flex flex-wrap items-center gap-2">
-                <span className="text-xs text-zinc-400 dark:text-zinc-500">Active Filters:</span>
+                <span className="text-xs text-zinc-400 dark:text-zinc-550">Active Filters:</span>
                 {subject !== 'all' && (
-                  <span className="text-xs bg-violet-50 dark:bg-violet-950/20 text-violet-700 dark:text-violet-400 border border-violet-100 dark:border-violet-950/50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="text-xs bg-violet-50 dark:bg-violet-950/20 text-violet-700 dark:text-violet-400 border border-violet-100 dark:border-violet-955 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                     Subject: {formatEnumText(subject)}
                     <button onClick={() => setSubject('all')} className="hover:text-red-500 font-bold ml-1">×</button>
                   </span>
                 )}
                 {difficulty !== 'all' && (
-                  <span className="text-xs bg-violet-50 dark:bg-violet-950/20 text-violet-700 dark:text-violet-400 border border-violet-100 dark:border-violet-950/50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="text-xs bg-violet-50 dark:bg-violet-950/20 text-violet-700 dark:text-violet-400 border border-violet-100 dark:border-violet-955 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                     Difficulty: {formatEnumText(difficulty)}
                     <button onClick={() => setDifficulty('all')} className="hover:text-red-500 font-bold ml-1">×</button>
                   </span>
                 )}
                 {type !== 'all' && (
-                  <span className="text-xs bg-violet-50 dark:bg-violet-950/20 text-violet-700 dark:text-violet-400 border border-violet-100 dark:border-violet-950/50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="text-xs bg-violet-50 dark:bg-violet-950/20 text-violet-700 dark:text-violet-400 border border-violet-100 dark:border-violet-955 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                     Type: {formatEnumText(type)}
                     <button onClick={() => setType('all')} className="hover:text-red-500 font-bold ml-1">×</button>
                   </span>
                 )}
                 {tag !== '' && (
-                  <span className="text-xs bg-violet-50 dark:bg-violet-950/20 text-violet-700 dark:text-violet-400 border border-violet-100 dark:border-violet-950/50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                  <span className="text-xs bg-violet-50 dark:bg-violet-950/20 text-violet-700 dark:text-violet-400 border border-violet-100 dark:border-violet-955 px-2.5 py-0.5 rounded-full flex items-center gap-1">
                     Tag: #{tag}
                     <button onClick={() => { setTag(''); setLocalTag(''); }} className="hover:text-red-500 font-bold ml-1">×</button>
                   </span>
@@ -308,7 +311,7 @@ export default function QuestionsPage() {
               </div>
               <button
                 onClick={handleClearFilters}
-                className="text-xs font-semibold text-zinc-500 hover:text-red-500 transition duration-150"
+                className="text-xs font-bold text-zinc-500 hover:text-red-500 transition duration-150"
               >
                 Clear All
               </button>
@@ -316,7 +319,7 @@ export default function QuestionsPage() {
           )}
         </div>
 
-        {/* Questions Grid */}
+        {/* Questions Display */}
         {isLoading ? (
           <div className="flex flex-col items-center justify-center p-20">
             <svg className="animate-spin h-8 w-8 text-violet-600 mb-4" fill="none" viewBox="0 0 24 24">
@@ -344,140 +347,88 @@ export default function QuestionsPage() {
             </Link>
           </div>
         ) : (
-          <div className="grid gap-6">
-            {questions.map((question) => (
-              <div
-                key={question.id}
-                className="p-6 bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl shadow-sm hover:shadow-md transition duration-205 flex flex-col justify-between"
-              >
-                <div>
-                  <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-                    <div className="flex flex-wrap items-center gap-2">
-                      <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 uppercase tracking-wider">
-                        {question.subject.replace(/_/g, ' ')}
-                      </span>
-                      <span className="text-xs font-semibold px-2.5 py-1 rounded-md bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-300 uppercase tracking-wider">
-                        {question.type}
-                      </span>
-                      <span
-                        className={`text-xs font-semibold px-2.5 py-1 rounded-md uppercase tracking-wider ${
-                          question.difficulty === 'easy'
-                            ? 'bg-green-50 dark:bg-green-950/30 text-green-700 dark:text-green-400'
-                            : question.difficulty === 'medium'
-                            ? 'bg-amber-50 dark:bg-amber-950/30 text-amber-700 dark:text-amber-400'
-                            : 'bg-red-50 dark:bg-red-950/30 text-red-700 dark:text-red-400'
-                        }`}
-                      >
-                        {question.difficulty}
-                      </span>
-                    </div>
-                    <span className="text-xs text-zinc-400 dark:text-zinc-500">
-                      {new Date(question.createdAt).toLocaleDateString()}
-                    </span>
-                  </div>
-
-                  <p className="text-lg font-semibold text-zinc-900 dark:text-zinc-150 leading-relaxed mb-4">
-                    {question.questionText}
-                  </p>
-
-                  {question.mediaUrl && (
-                    <div className="mb-4 text-xs font-mono text-zinc-500 dark:text-zinc-400 bg-zinc-50 dark:bg-zinc-800/50 p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 max-w-full overflow-hidden text-ellipsis whitespace-nowrap">
-                      <span className="font-bold text-zinc-600 dark:text-zinc-350">Media URL: </span>
-                      {question.mediaUrl}
-                    </div>
-                  )}
-
-                  {/* Options Grid */}
-                  <div className="grid sm:grid-cols-2 gap-3 mb-6">
-                    {Array.isArray(question.options) &&
-                      (question.options as string[]).map((option, idx) => {
-                        const isCorrect = option === question.correctAnswer
-                        return (
-                          <div
-                            key={idx}
-                            className={`p-3.5 rounded-xl border flex items-center gap-3 transition-colors ${
-                              isCorrect
-                                ? 'bg-emerald-50/50 dark:bg-emerald-950/20 border-emerald-500 text-emerald-900 dark:text-emerald-350 font-medium'
-                                : 'bg-zinc-50/50 dark:bg-zinc-800/10 border-zinc-200 dark:border-zinc-800 text-zinc-700 dark:text-zinc-400'
-                            }`}
-                          >
-                            <span
-                              className={`w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold ${
-                                isCorrect
-                                  ? 'bg-emerald-500 text-white'
-                                  : 'bg-zinc-200 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400'
-                              }`}
-                            >
-                              {String.fromCharCode(65 + idx)}
-                            </span>
-                            <span>{option}</span>
-                            {isCorrect && (
-                              <span className="ml-auto text-xs bg-emerald-100 dark:bg-emerald-950/50 text-emerald-800 dark:text-emerald-400 px-2 py-0.5 rounded font-bold uppercase tracking-wider">
-                                Correct
-                              </span>
-                            )}
-                          </div>
-                        )
-                      })}
-                  </div>
-
-                  {/* Tags and Explanation */}
-                  <div className="flex flex-col gap-4 border-t border-zinc-100 dark:border-zinc-800 pt-4">
-                    {question.tags.length > 0 && (
-                      <div className="flex flex-wrap gap-1.5 items-center">
-                        <span className="text-xs font-semibold text-zinc-400 dark:text-zinc-500 mr-1.5">Tags:</span>
-                        {question.tags.map((t) => (
-                          <span
-                            key={t.tag}
-                            className="text-xs bg-violet-50 dark:bg-violet-950/20 text-violet-700 dark:text-violet-400 px-2.5 py-0.5 rounded-full border border-violet-100 dark:border-violet-950/50"
-                          >
-                            #{t.tag}
+          /* Three Column Table Listing */
+          <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl shadow-md overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-zinc-200 dark:border-zinc-800 bg-zinc-50/50 dark:bg-zinc-900/50">
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
+                      Question Details
+                    </th>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center w-24">
+                      Edit
+                    </th>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center w-24">
+                      Delete
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-zinc-200 dark:divide-zinc-850">
+                  {questions.map((question) => (
+                    <tr key={question.id} className="hover:bg-zinc-50/30 dark:hover:bg-zinc-800/10 transition duration-150">
+                      <td className="px-6 py-5">
+                        <div className="text-zinc-900 dark:text-zinc-100 font-semibold text-base mb-2.5 leading-relaxed">
+                          {question.questionText}
+                        </div>
+                        <div className="flex flex-wrap items-center gap-x-2.5 gap-y-1 text-xs text-zinc-500 dark:text-zinc-450">
+                          <span className="font-bold px-2 py-0.5 rounded bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-350 uppercase tracking-wide">
+                            {question.subject.replace(/_/g, ' ')}
                           </span>
-                        ))}
-                      </div>
-                    )}
-
-                    {question.explanation && (
-                      <div className="bg-zinc-50 dark:bg-zinc-800/30 p-4 rounded-xl border border-zinc-150 dark:border-zinc-800">
-                        <p className="text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 mb-1">
-                          Explanation
-                        </p>
-                        <p className="text-sm leading-relaxed text-zinc-700 dark:text-zinc-350">
-                          {question.explanation}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-
-                {/* Edit and Delete Actions */}
-                <div className="flex items-center justify-end gap-3 border-t border-zinc-100 dark:border-zinc-800/80 pt-4 mt-6">
-                  <Link
-                    href={`/questions/${question.id}`}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-300 transition duration-150"
-                  >
-                    <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
-                    </svg>
-                    Edit
-                  </Link>
-                  <Button
-                    isDisabled={deletingId === question.id}
-                    onPress={() => handleDeleteQuestion(question.id)}
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-bold bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 hover:bg-red-100 dark:hover:bg-red-950/40 transition duration-150 cursor-pointer"
-                  >
-                    {deletingId === question.id ? (
-                      <span className="w-3.5 h-3.5 border-2 border-red-600 border-t-transparent rounded-full animate-spin" />
-                    ) : (
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
-                      </svg>
-                    )}
-                    Delete
-                  </Button>
-                </div>
-              </div>
-            ))}
+                          <span className="text-zinc-300 dark:text-zinc-700">|</span>
+                          <span className={`font-bold capitalize ${
+                            question.difficulty === 'easy' ? 'text-emerald-600 dark:text-emerald-400' :
+                            question.difficulty === 'medium' ? 'text-amber-600 dark:text-amber-400' :
+                            'text-rose-600 dark:text-rose-400'
+                          }`}>
+                            {question.difficulty}
+                          </span>
+                          {question.tags.length > 0 && (
+                            <>
+                              <span className="text-zinc-300 dark:text-zinc-700">|</span>
+                              <div className="flex flex-wrap gap-1.5">
+                                {question.tags.map((t) => (
+                                  <span key={t.tag} className="text-violet-600 dark:text-violet-400 font-bold">
+                                    #{t.tag}
+                                  </span>
+                                ))}
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </td>
+                      <td className="px-6 py-5 text-center align-middle">
+                        <Link
+                          href={`/questions/${question.id}`}
+                          className="inline-flex items-center justify-center p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-650 dark:text-zinc-350 hover:text-zinc-950 dark:hover:text-white transition duration-150 shadow-sm"
+                          title="Edit Question"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M16.862 4.487l1.687-1.688a1.875 1.875 0 112.652 2.652L6.832 19.82a4.5 4.5 0 01-1.897 1.13l-2.685.8.8-2.685a4.5 4.5 0 011.13-1.897L16.863 4.487zm0 0L19.5 7.125" />
+                          </svg>
+                        </Link>
+                      </td>
+                      <td className="px-6 py-5 text-center align-middle">
+                        <Button
+                          isDisabled={deletingId === question.id}
+                          onPress={() => handleDeleteQuestion(question.id)}
+                          className="inline-flex items-center justify-center p-2.5 rounded-xl bg-red-50 dark:bg-red-950/20 text-red-600 dark:text-red-400 border border-red-200 dark:border-red-900/50 hover:bg-red-100 dark:hover:bg-red-950/40 transition duration-150 cursor-pointer shadow-sm"
+                          aria-label="Delete Question"
+                        >
+                          {deletingId === question.id ? (
+                            <span className="w-4 h-4 border-2 border-red-650 border-t-transparent rounded-full animate-spin" />
+                          ) : (
+                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0" />
+                            </svg>
+                          )}
+                        </Button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         )}
 
@@ -487,7 +438,7 @@ export default function QuestionsPage() {
             <Button
               isDisabled={page === 1}
               onPress={() => setPage((p) => Math.max(p - 1, 1))}
-              className="px-4 py-2 text-xs font-semibold border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="px-4 py-2.5 text-xs font-bold border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
             >
               Previous
             </Button>
@@ -497,7 +448,7 @@ export default function QuestionsPage() {
                 <Button
                   key={pageNumber}
                   onPress={() => setPage(pageNumber)}
-                  className={`w-9 h-9 flex items-center justify-center text-xs font-semibold rounded-xl transition cursor-pointer ${
+                  className={`w-10 h-10 flex items-center justify-center text-xs font-bold rounded-xl transition cursor-pointer shadow-sm ${
                     page === pageNumber
                       ? 'bg-violet-600 text-white shadow-md shadow-violet-500/20'
                       : 'border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-700 dark:text-zinc-350'
@@ -510,7 +461,7 @@ export default function QuestionsPage() {
             <Button
               isDisabled={page === totalPages}
               onPress={() => setPage((p) => Math.min(p + 1, totalPages))}
-              className="px-4 py-2 text-xs font-semibold border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
+              className="px-4 py-2.5 text-xs font-bold border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 rounded-xl hover:bg-zinc-100 dark:hover:bg-zinc-800 transition active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer shadow-sm"
             >
               Next
             </Button>
