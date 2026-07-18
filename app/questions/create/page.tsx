@@ -213,6 +213,21 @@ export default function CreateQuestionPage() {
 
             </div>
 
+            {/* Tags (Comma separated) */}
+            <TextField name="tags" className="w-full">
+              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
+                Tags (Comma-separated)
+              </Label>
+              <Input
+                type="text"
+                placeholder="e.g., algebra, calculus, physics"
+                className="w-full bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm"
+              />
+              <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1.5">
+                Separate multiple tags with commas. Casing will be normalized.
+              </p>
+            </TextField>
+
             {/* Question Text */}
             <TextField name="questionText" isInvalid={!!state.errors?.questionText} isRequired className="w-full">
               <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
@@ -282,21 +297,6 @@ export default function CreateQuestionPage() {
                 <FieldError className="text-xs text-red-500 mt-2 block">{state.errors.correctAnswer}</FieldError>
               )}
             </RadioGroup>
-
-            {/* Tags (Comma separated) */}
-            <TextField name="tags" className="w-full">
-              <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">
-                Tags (Comma-separated)
-              </Label>
-              <Input
-                type="text"
-                placeholder="e.g., algebra, calculus, physics"
-                className="w-full bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm"
-              />
-              <p className="text-xs text-zinc-400 dark:text-zinc-500 mt-1.5">
-                Separate multiple tags with commas. Casing will be normalized.
-              </p>
-            </TextField>
 
             {/* Explanation */}
             <TextField name="explanation" isInvalid={!!state.errors?.explanation} className="w-full">
