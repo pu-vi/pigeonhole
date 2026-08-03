@@ -1,5 +1,7 @@
 'use server'
 
+import { GoogleGenAI, ThinkingLevel, Type } from '@google/genai'
+
 export type FormState = {
   success: boolean
   message: string
@@ -22,8 +24,16 @@ export async function generateQuestionWithAI(
   difficulty: string,
   tags?: string
 ): Promise<AIQuestionResponse> {
+  const timestamp = new Date().toISOString()
+  console.log(`\x1b[36m[DEBUG - ${timestamp}] [generateQuestionWithAI]\x1b[0m Starting AI question generation with Google Gen AI SDK`, {
+    subject,
+    difficulty,
+    tags,
+  })
+
   const apiKey = process.env.GEMINI_API_KEY
   if (!apiKey) {
+    console.error(`\x1b[31m[DEBUG - ${timestamp}] [generateQuestionWithAI]\x1b[0m Missing GEMINI_API_KEY environment variable.`)
     return {
       success: false,
       message: 'Gemini API key is not configured in the environment.',
@@ -41,52 +51,43 @@ Requirements:
 3. Indicate the correct option by its index (0, 1, 2, or 3).
 4. Provide a helpful, concise explanation for the correct answer.`
 
-  try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`
-    const requestBody = {
-      contents: [
-        {
-          parts: [{ text: prompt }]
-        }
-      ],
-      generationConfig: {
-        responseMimeType: "application/json",
-        responseSchema: {
-          type: "object",
-          properties: {
-            questionText: { type: "string" },
-            options: {
-              type: "array",
-              items: { type: "string" }
-            },
-            correctAnswerIndex: { type: "integer" },
-            explanation: { type: "string" }
-          },
-          required: ["questionText", "options", "correctAnswerIndex", "explanation"]
-        }
-      }
-    }
+  console.log(`\x1b[33m[DEBUG] [generateQuestionWithAI]\x1b[0m Constructed Prompt:\n${prompt}`)
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+  try {
+    console.log(`\x1b[34m[DEBUG] [generateQuestionWithAI]\x1b[0m Initializing GoogleGenAI client...`)
+    const ai = new GoogleGenAI({ apiKey })
+
+    console.log(`\x1b[34m[DEBUG] [generateQuestionWithAI]\x1b[0m Calling ai.models.generateContent (gemini-2.5-flash)...`)
+    const response = await ai.models.generateContent({
+      // model: 'gemini-2.5-flash',
+      model: "gemini-3.5-flash-lite",
+      contents: prompt,
+      config: {
+        thinkingConfig: {
+          thinkingLevel: ThinkingLevel.MINIMAL
+        },
+        responseMimeType: 'application/json',
+        responseSchema: {
+          type: Type.OBJECT,
+          properties: {
+            questionText: { type: Type.STRING },
+            options: {
+              type: Type.ARRAY,
+              items: { type: Type.STRING },
+            },
+            correctAnswerIndex: { type: Type.INTEGER },
+            explanation: { type: Type.STRING },
+          },
+          required: ['questionText', 'options', 'correctAnswerIndex', 'explanation'],
+        },
       },
-      body: JSON.stringify(requestBody),
     })
 
-    if (!response.ok) {
-      const errorText = await response.text()
-      console.error('Gemini API error response:', errorText)
-      return {
-        success: false,
-        message: `Gemini API returned status ${response.status}: ${response.statusText}`,
-      }
-    }
+    const text = response.text
+    console.log(`\x1b[35m[DEBUG] [generateQuestionWithAI]\x1b[0m Received raw response text from SDK:`, text)
 
-    const data = await response.json()
-    const text = data.candidates?.[0]?.content?.parts?.[0]?.text
     if (!text) {
+      console.warn(`\x1b[33m[DEBUG] [generateQuestionWithAI]\x1b[0m No response text returned from SDK.`)
       return {
         success: false,
         message: 'No response content was received from the AI model.',
@@ -94,6 +95,8 @@ Requirements:
     }
 
     const parsed = JSON.parse(text)
+    console.log(`\x1b[32m[DEBUG] [generateQuestionWithAI]\x1b[0m Parsed JSON payload:`, parsed)
+
     if (
       typeof parsed.questionText !== 'string' ||
       !Array.isArray(parsed.options) ||
@@ -103,11 +106,14 @@ Requirements:
       parsed.correctAnswerIndex > 3 ||
       typeof parsed.explanation !== 'string'
     ) {
+      console.error(`\x1b[31m[DEBUG] [generateQuestionWithAI]\x1b[0m Schema validation failed on parsed output:`, parsed)
       return {
         success: false,
         message: 'The AI model returned an invalid or malformed response structure.',
       }
     }
+
+    console.log(`\x1b[32m[DEBUG] [generateQuestionWithAI]\x1b[0m Question generated successfully via Gen AI SDK!`)
 
     return {
       success: true,
@@ -120,7 +126,7 @@ Requirements:
       },
     }
   } catch (error) {
-    console.error('Error calling Gemini API:', error)
+    console.error(`\x1b[31m[DEBUG] [generateQuestionWithAI]\x1b[0m Exception caught in generateQuestionWithAI:`, error)
     return {
       success: false,
       message: error instanceof Error ? error.message : 'An unexpected error occurred during generation.',
