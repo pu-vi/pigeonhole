@@ -16,6 +16,7 @@ import {
   Button,
   Label,
 } from '@heroui/react'
+import QuestionLightbox from './components/QuestionLightbox'
 
 export default function QuestionsPage() {
   const [questions, setQuestions] = useState<(Question & { tags: QuestionTag[] })[]>([])
@@ -23,6 +24,9 @@ export default function QuestionsPage() {
   const [page, setPage] = useState(1)
   const [totalPages, setTotalPages] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
+
+  // Lightbox View State
+  const [viewingQuestion, setViewingQuestion] = useState<(Question & { tags: QuestionTag[] }) | null>(null)
 
   // Filters
   const [subject, setSubject] = useState<string>('all')
@@ -361,10 +365,13 @@ export default function QuestionsPage() {
                     <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400">
                       Question Details
                     </th>
-                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center w-24">
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center w-20">
+                      View
+                    </th>
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center w-20">
                       Edit
                     </th>
-                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center w-24">
+                    <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-zinc-500 dark:text-zinc-400 text-center w-20">
                       Delete
                     </th>
                   </tr>
@@ -401,6 +408,18 @@ export default function QuestionsPage() {
                             </>
                           )}
                         </div>
+                      </td>
+                      <td className="px-6 py-5 text-center align-middle">
+                        <Button
+                          onPress={() => setViewingQuestion(question)}
+                          className="inline-flex items-center justify-center p-2.5 rounded-xl border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 text-zinc-650 dark:text-zinc-350 hover:text-zinc-950 dark:hover:text-white transition duration-150 shadow-sm cursor-pointer"
+                          aria-label="View Question"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z" />
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                          </svg>
+                        </Button>
                       </td>
                       <td className="px-6 py-5 text-center align-middle">
                         <Link
@@ -471,6 +490,14 @@ export default function QuestionsPage() {
               Next
             </Button>
           </div>
+        )}
+
+        {/* Question 4:5 Lightbox Modal */}
+        {viewingQuestion && (
+          <QuestionLightbox
+            question={viewingQuestion}
+            onClose={() => setViewingQuestion(null)}
+          />
         )}
       </main>
     </div>
