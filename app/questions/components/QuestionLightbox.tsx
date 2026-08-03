@@ -113,37 +113,37 @@ export default function QuestionLightbox({ question, onClose }: QuestionLightbox
           <div className="absolute inset-0 bg-black rounded-[34px] sm:rounded-[38px] translate-x-3.5 translate-y-3.5 sm:translate-x-4 sm:translate-y-4" />
 
           {/* Main White Flashcard Container */}
-          <div className="relative h-full w-full bg-white rounded-[28px] sm:rounded-[32px] p-6 sm:p-8 flex flex-col justify-between items-center text-zinc-950 shadow-xl overflow-hidden border border-black/10">
+          <div className="relative h-full w-full bg-white rounded-[28px] sm:rounded-[32px] p-5 sm:p-7 flex flex-col justify-between items-center text-zinc-950 shadow-xl overflow-hidden border border-black/10">
             
             {/* Question Media (Optional) */}
             {question.mediaUrl && (
-              <div className="w-full max-h-28 sm:max-h-32 mb-2 rounded-2xl overflow-hidden bg-zinc-100 flex items-center justify-center flex-shrink-0">
+              <div className="w-full max-h-24 sm:max-h-28 mb-2 rounded-2xl overflow-hidden bg-zinc-100 flex items-center justify-center flex-shrink-0">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src={question.mediaUrl}
                   alt="Question diagram or illustration"
-                  className="max-h-28 sm:max-h-32 object-contain"
+                  className="max-h-24 sm:max-h-28 object-contain"
                 />
               </div>
             )}
 
             {/* Question Text Centered */}
-            <div className="flex-1 flex items-center justify-center w-full px-2 py-4">
-              <h2 className="text-center font-bold text-xl sm:text-2xl text-zinc-900 leading-snug tracking-tight">
+            <div className="flex-1 flex items-center justify-center w-full px-2 py-3">
+              <h2 className="text-center font-bold text-lg sm:text-xl md:text-2xl text-zinc-900 leading-snug tracking-tight">
                 {question.questionText}
               </h2>
             </div>
 
             {/* Options Grid (Vertical Pills) */}
-            <div className="w-full space-y-3 sm:space-y-3.5 mt-auto">
+            <div className="w-full space-y-2.5 sm:space-y-3 mt-auto">
               {options.map((option, idx) => {
                 const letter = String.fromCharCode(65 + idx)
                 return (
                   <div
                     key={idx}
-                    className="w-full bg-[#FFC700] rounded-xl sm:rounded-2xl px-4 sm:px-5 py-3 sm:py-3.5 flex items-center text-zinc-950 text-base sm:text-lg shadow-sm"
+                    className="w-full bg-[#FFC700] rounded-xl sm:rounded-2xl px-4 sm:px-5 py-2.5 sm:py-3 flex items-center text-zinc-950 text-sm sm:text-base shadow-sm"
                   >
-                    <span className="font-bold text-lg sm:text-xl mr-3 sm:mr-3.5 min-w-[24px]">
+                    <span className="font-bold text-base sm:text-lg mr-3 sm:mr-3.5 min-w-[24px]">
                       {letter}.
                     </span>
                     <span className="flex-1 text-left leading-tight font-medium">
@@ -152,6 +152,16 @@ export default function QuestionLightbox({ question, onClose }: QuestionLightbox
                   </div>
                 )
               })}
+            </div>
+
+            {/* Neon Logo Watermark after last option */}
+            <div className="w-full flex justify-center items-center pt-1 mt-1.5 pb-0 flex-shrink-0">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/neon-logo.png"
+                alt="Neon Logo"
+                className="h-4 sm:h-5 object-contain opacity-90"
+              />
             </div>
           </div>
         </div>
