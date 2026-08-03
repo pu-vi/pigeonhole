@@ -182,88 +182,82 @@ export default function QuestionsPage() {
         <div className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-3xl p-8 mb-8 shadow-md">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 items-end">
             {/* Subject Select */}
-            <div className="flex flex-col gap-1.5 w-full">
+            <Select
+              name="subject"
+              selectedKey={subject}
+              onSelectionChange={(key) => handleFilterChange('subject', key as string)}
+              className="w-full flex flex-col gap-1.5"
+            >
               <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Subject</Label>
-              <Select
-                name="subject"
-                selectedKey={subject}
-                onSelectionChange={(key) => handleFilterChange('subject', key as string)}
-                className="w-full"
-              >
-                <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
-                  <SelectValue />
-                  <SelectIndicator className="w-4 h-4 ml-2" />
-                </SelectTrigger>
-                <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
-                  <ListBox selectionMode="single">
-                    <ListBoxItem id="all" className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
-                      All Subjects
+              <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
+                <SelectValue />
+                <SelectIndicator className="w-4 h-4 ml-2" />
+              </SelectTrigger>
+              <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
+                <ListBox selectionMode="single" aria-label="Subject options">
+                  <ListBoxItem id="all" textValue="All Subjects" className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                    All Subjects
+                  </ListBoxItem>
+                  {subjects.map((sub) => (
+                    <ListBoxItem id={sub} key={sub} textValue={formatEnumText(sub)} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                      {formatEnumText(sub)}
                     </ListBoxItem>
-                    {subjects.map((sub) => (
-                      <ListBoxItem id={sub} key={sub} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
-                        {formatEnumText(sub)}
-                      </ListBoxItem>
-                    ))}
-                  </ListBox>
-                </SelectPopover>
-              </Select>
-            </div>
+                  ))}
+                </ListBox>
+              </SelectPopover>
+            </Select>
 
             {/* Difficulty Select */}
-            <div className="flex flex-col gap-1.5 w-full">
+            <Select
+              name="difficulty"
+              selectedKey={difficulty}
+              onSelectionChange={(key) => handleFilterChange('difficulty', key as string)}
+              className="w-full flex flex-col gap-1.5"
+            >
               <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Difficulty</Label>
-              <Select
-                name="difficulty"
-                selectedKey={difficulty}
-                onSelectionChange={(key) => handleFilterChange('difficulty', key as string)}
-                className="w-full"
-              >
-                <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
-                  <SelectValue />
-                  <SelectIndicator className="w-4 h-4 ml-2" />
-                </SelectTrigger>
-                <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
-                  <ListBox selectionMode="single">
-                    <ListBoxItem id="all" className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
-                      All Difficulties
+              <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
+                <SelectValue />
+                <SelectIndicator className="w-4 h-4 ml-2" />
+              </SelectTrigger>
+              <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
+                <ListBox selectionMode="single" aria-label="Difficulty options">
+                  <ListBoxItem id="all" textValue="All Difficulties" className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                    All Difficulties
+                  </ListBoxItem>
+                  {difficulties.map((diff) => (
+                    <ListBoxItem id={diff} key={diff} textValue={formatEnumText(diff)} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                      {formatEnumText(diff)}
                     </ListBoxItem>
-                    {difficulties.map((diff) => (
-                      <ListBoxItem id={diff} key={diff} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
-                        {formatEnumText(diff)}
-                      </ListBoxItem>
-                    ))}
-                  </ListBox>
-                </SelectPopover>
-              </Select>
-            </div>
+                  ))}
+                </ListBox>
+              </SelectPopover>
+            </Select>
 
             {/* Question Type Select */}
-            <div className="flex flex-col gap-1.5 w-full">
+            <Select
+              name="type"
+              selectedKey={type}
+              onSelectionChange={(key) => handleFilterChange('type', key as string)}
+              className="w-full flex flex-col gap-1.5"
+            >
               <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Question Type</Label>
-              <Select
-                name="type"
-                selectedKey={type}
-                onSelectionChange={(key) => handleFilterChange('type', key as string)}
-                className="w-full"
-              >
-                <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
-                  <SelectValue />
-                  <SelectIndicator className="w-4 h-4 ml-2" />
-                </SelectTrigger>
-                <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
-                  <ListBox selectionMode="single">
-                    <ListBoxItem id="all" className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
-                      All Types
+              <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
+                <SelectValue />
+                <SelectIndicator className="w-4 h-4 ml-2" />
+              </SelectTrigger>
+              <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
+                <ListBox selectionMode="single" aria-label="Question type options">
+                  <ListBoxItem id="all" textValue="All Types" className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                    All Types
+                  </ListBoxItem>
+                  {questionTypes.map((t) => (
+                    <ListBoxItem id={t} key={t} textValue={formatEnumText(t)} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                      {formatEnumText(t)}
                     </ListBoxItem>
-                    {questionTypes.map((t) => (
-                      <ListBoxItem id={t} key={t} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
-                        {formatEnumText(t)}
-                      </ListBoxItem>
-                    ))}
-                  </ListBox>
-                </SelectPopover>
-              </Select>
-            </div>
+                  ))}
+                </ListBox>
+              </SelectPopover>
+            </Select>
 
             {/* Tag Search Input */}
             <div className="flex flex-col gap-1.5 w-full">
@@ -271,6 +265,7 @@ export default function QuestionsPage() {
               <form onSubmit={handleTagSearch} className="relative w-full">
                 <Input
                   type="text"
+                  aria-label="Filter by tag"
                   placeholder="e.g. algebra"
                   value={localTag}
                   onChange={(e) => setLocalTag(e.target.value)}

@@ -296,9 +296,9 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
                   <SelectIndicator className="w-4 h-4 ml-2" />
                 </SelectTrigger>
                 <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
-                  <ListBox selectionMode="single">
+                  <ListBox selectionMode="single" aria-label="Subject options">
                     {subjects.map((sub) => (
-                      <ListBoxItem id={sub} key={sub} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                      <ListBoxItem id={sub} key={sub} textValue={formatEnumText(sub)} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
                         {formatEnumText(sub)}
                       </ListBoxItem>
                     ))}
@@ -315,9 +315,9 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
                   <SelectIndicator className="w-4 h-4 ml-2" />
                 </SelectTrigger>
                 <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
-                  <ListBox selectionMode="single">
+                  <ListBox selectionMode="single" aria-label="Difficulty options">
                     {difficulties.map((diff) => (
-                      <ListBoxItem id={diff} key={diff} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                      <ListBoxItem id={diff} key={diff} textValue={formatEnumText(diff)} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
                         {formatEnumText(diff)}
                       </ListBoxItem>
                     ))}
@@ -336,9 +336,9 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
                   <SelectIndicator className="w-4 h-4 ml-2" />
                 </SelectTrigger>
                 <SelectPopover className="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-xl shadow-lg mt-1 p-1 z-50">
-                  <ListBox selectionMode="single">
+                  <ListBox selectionMode="single" aria-label="Question type options">
                     {questionTypes.map((t) => (
-                      <ListBoxItem id={t} key={t} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
+                      <ListBoxItem id={t} key={t} textValue={formatEnumText(t)} className="px-3 py-2 text-sm text-zinc-700 dark:text-zinc-300 rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800 hover:text-zinc-950 dark:hover:text-white cursor-pointer transition-colors duration-100">
                         {formatEnumText(t)}
                       </ListBoxItem>
                     ))}
@@ -480,6 +480,7 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
                       <Input
                         type="text"
                         name={`option${idx}`}
+                        aria-label={`Option ${String.fromCharCode(65 + idx)}`}
                         required
                         value={getOptionVal(idx)}
                         onChange={(e) => setOptionVal(idx, e.target.value)}
