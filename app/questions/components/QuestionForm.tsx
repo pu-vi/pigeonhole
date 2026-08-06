@@ -45,6 +45,9 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
   const formRef = useRef<HTMLFormElement>(null)
 
   // Initialize form fields based on mode
+  const [subject, setSubject] = useState<string>(initialQuestion?.subject || 'computer_science')
+  const [difficulty, setDifficulty] = useState<string>(initialQuestion?.difficulty || 'medium')
+  const [type, setType] = useState<string>(initialQuestion?.type || 'text')
   const [questionText, setQuestionText] = useState(initialQuestion?.questionText || '')
   const [option0, setOption0] = useState(
     initialQuestion?.options ? (initialQuestion.options as string[])[0] || '' : ''
@@ -124,7 +127,7 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
       const result = await res.json()
       setState(result)
       if (result.success && mode === 'create') {
-        formRef.current?.reset()
+        // Clear question content but retain subject, difficulty, type, and tags
         setQuestionText('')
         setOption0('')
         setOption1('')
@@ -132,7 +135,6 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
         setOption3('')
         setCorrectAnswer('')
         setExplanation('')
-        setTags('')
         setMediaUrl('')
         setAiError(null)
       }
@@ -148,16 +150,9 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
 
   const handleGenerateQuestion = async () => {
     setAiError(null)
-    if (!formRef.current) return
-
-    const formData = new FormData(formRef.current)
-    const subjectVal = formData.get('subject') as string
-    const difficultyVal = formData.get('difficulty') as string
-    const tagsVal = formData.get('tags') as string
-
     setIsGenerating(true)
     try {
-      const res = await generateQuestionWithAI(subjectVal, difficultyVal, tagsVal)
+      const res = await generateQuestionWithAI(subject, difficulty, tags)
       if (res.success && res.data) {
         setQuestionText(res.data.questionText)
         setOption0(res.data.options[0] || '')
@@ -289,7 +284,12 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
             {/* Subject, Difficulty, and Type Grid */}
             <div className="grid md:grid-cols-3 gap-6">
               {/* Subject */}
-              <Select name="subject" defaultValue={initialQuestion?.subject || 'computer_science'} className="w-full">
+              <Select
+                name="subject"
+                selectedKey={subject}
+                onSelectionChange={(key) => setSubject(key as string)}
+                className="w-full"
+              >
                 <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Subject *</Label>
                 <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
                   <SelectValue />
@@ -308,7 +308,12 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
               </Select>
 
               {/* Difficulty */}
-              <Select name="difficulty" defaultValue={initialQuestion?.difficulty || 'medium'} className="w-full">
+              <Select
+                name="difficulty"
+                selectedKey={difficulty}
+                onSelectionChange={(key) => setDifficulty(key as string)}
+                className="w-full"
+              >
                 <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Difficulty *</Label>
                 <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
                   <SelectValue />
@@ -329,7 +334,12 @@ export default function QuestionForm({ mode, initialQuestion }: QuestionFormProp
               </Select>
 
               {/* Question Type */}
-              <Select name="type" defaultValue={initialQuestion?.type || 'text'} className="w-full">
+              <Select
+                name="type"
+                selectedKey={type}
+                onSelectionChange={(key) => setType(key as string)}
+                className="w-full"
+              >
                 <Label className="block text-sm font-bold text-zinc-700 dark:text-zinc-300 mb-2">Question Type *</Label>
                 <SelectTrigger className="w-full flex items-center justify-between bg-white dark:bg-zinc-900/50 border border-zinc-200 dark:border-zinc-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-violet-500/20 focus:border-violet-500 transition shadow-sm">
                   <SelectValue />
