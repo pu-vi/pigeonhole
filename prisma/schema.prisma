@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,7 +13,7 @@ enum Subject {
   social_studies
   history
   geography
-  civics
+  space_science
   economics
   computer_science
   general_knowledge
@@ -61,7 +56,24 @@ model Question {
   explanation   String?
   createdAt     DateTime     @default(now()) @db.Timestamptz @map("created_at")
 
+  tags          QuestionTag[]
+
   @@map("questions")
+}
+
+model QuestionTag {
+  questionId String   @db.Uuid @map("question_id")
+  tag        String
+  createdAt  DateTime @default(now()) @db.Timestamptz @map("created_at")
+
+  question Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@id([questionId, tag])
+
+  @@index([tag])
+  @@index([questionId])
+
+  @@map("question_tags")
 }
 
 model RequestLog {
